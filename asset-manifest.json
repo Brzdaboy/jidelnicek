@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/jidelnicek/static/css/main.b42bb3bc.css",
-    "main.js": "/jidelnicek/static/js/main.6ad3bda0.js",
+    "main.js": "/jidelnicek/static/js/main.90c9282a.js",
     "static/js/453.d5c56264.chunk.js": "/jidelnicek/static/js/453.d5c56264.chunk.js",
     "index.html": "/jidelnicek/index.html",
     "main.b42bb3bc.css.map": "/jidelnicek/static/css/main.b42bb3bc.css.map",
-    "main.6ad3bda0.js.map": "/jidelnicek/static/js/main.6ad3bda0.js.map",
+    "main.90c9282a.js.map": "/jidelnicek/static/js/main.90c9282a.js.map",
     "453.d5c56264.chunk.js.map": "/jidelnicek/static/js/453.d5c56264.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b42bb3bc.css",
-    "static/js/main.6ad3bda0.js"
+    "static/js/main.90c9282a.js"
   ]
 }
