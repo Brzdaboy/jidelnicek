@@ -16,8 +16,8 @@ function LandingPage({ onStartApp }) {
           <h1 className="hero-title">Týdenní jídelníček</h1>
           <p className="hero-subtitle">Profesionální nástroj pro plánování školních a firemních jídelníčků</p>
           <p className="hero-description">
-            Vytvářejte týdenní jídelníčky snadno a rychle. Automatická detekce alergenů, 
-            export do PDF a přehledný tisk na A4.
+            Vytvářejte týdenní jídelníčky snadno a rychle.<br />
+            Automatická detekce alergenů, export do PDF a přehledný tisk na A4.
           </p>
           <button className="cta-button" onClick={scrollToDemo}>
             Vyzkoušet demo zdarma
