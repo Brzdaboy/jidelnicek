@@ -389,9 +389,7 @@ function App() {
     closeContactModal();
   };
 
-  const monthNames = ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 
-                      'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'];
-  const dayNames = ['Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek'];
+  
 
   // Uložení dat do localStorage při každé změně
   useEffect(() => {
