@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Printer, Download, ChevronLeft, ChevronRight, Calendar } from 'lucide-react';
 import LandingPage from './LandingPage';
 import './App.css';
@@ -12,21 +12,33 @@ function App() {
   const [loginError, setLoginError] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [weekOffset, setWeekOffset] = useState(0);
-  const [menus, setMenus] = useState({});
+  const [menus, setMenus] = useState(() => {
+    const saved = localStorage.getItem('menus');
+    return saved ? JSON.parse(saved) : {};
+  });
   const [showCalendar, setShowCalendar] = useState(false);
   const [calendarMonth, setCalendarMonth] = useState(new Date());
   const [suggestions, setSuggestions] = useState([]);
   const [activeSuggestionField, setActiveSuggestionField] = useState(null);
   const [focusedInput, setFocusedInput] = useState(null);
   const [showAttachmentsModal, setShowAttachmentsModal] = useState(false);
-  const [attachments, setAttachments] = useState({});
+  const [attachments, setAttachments] = useState(() => {
+    const saved = localStorage.getItem('attachments');
+    return saved ? JSON.parse(saved) : {};
+  });
   const [tempAttachments, setTempAttachments] = useState([]);
-  const [allergens, setAllergens] = useState({});
+  const [allergens, setAllergens] = useState(() => {
+    const saved = localStorage.getItem('allergens');
+    return saved ? JSON.parse(saved) : {};
+  });
   const [showAllergenModal, setShowAllergenModal] = useState(false);
   const [currentAllergenEdit, setCurrentAllergenEdit] = useState(null);
   const [tempAllergens, setTempAllergens] = useState([]);
   const [showContactModal, setShowContactModal] = useState(false);
-  const [contactInfo, setContactInfo] = useState({ phone: '', email: '' });
+  const [contactInfo, setContactInfo] = useState(() => {
+    const saved = localStorage.getItem('contactInfo');
+    return saved ? JSON.parse(saved) : { phone: '', email: '' };
+  });
   const [tempContactInfo, setTempContactInfo] = useState({ phone: '', email: '' });
 
   const allergenList = [
@@ -376,6 +388,27 @@ function App() {
     setContactInfo({ ...tempContactInfo });
     closeContactModal();
   };
+
+  const monthNames = ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 
+                      'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'];
+  const dayNames = ['Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek'];
+
+  // Uložení dat do localStorage při každé změně
+  useEffect(() => {
+    localStorage.setItem('menus', JSON.stringify(menus));
+  }, [menus]);
+
+  useEffect(() => {
+    localStorage.setItem('attachments', JSON.stringify(attachments));
+  }, [attachments]);
+
+  useEffect(() => {
+    localStorage.setItem('allergens', JSON.stringify(allergens));
+  }, [allergens]);
+
+  useEffect(() => {
+    localStorage.setItem('contactInfo', JSON.stringify(contactInfo));
+  }, [contactInfo]);
 
   if (showLanding && !isLoggedIn) {
     return <LandingPage onStartApp={() => setShowLanding(false)} />;
