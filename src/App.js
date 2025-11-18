@@ -61,26 +61,31 @@ function App() {
     localStorage.setItem('contactInfo', JSON.stringify(contactInfo));
   }, [contactInfo]);
 
-  const allergenList = [
-    { id: 1, name: "Lepek pÅ¡enice, Å¾ito, jeÄmen, oves, Å¡palda, kamut nebo jejich odrÅ¯dy" },
-    { id: 2, name: "KorÃ½Å¡i" },
-    { id: 3, name: "Vejce" },
-    { id: 4, name: "Ryby" },
-    { id: 5, name: "AraÅ¡Ã­dy podzemnice olejnÃ¡" },
-    { id: 6, name: "SÃ³ja sÃ³jovÃ© boby" },
-    { id: 7, name: "MlÃ©ko" },
-    { id: 8, name: "SkoÅ™Ã¡pkovÃ© plody mandle, lÃ­skovÃ© oÅ™echy, vlaÅ¡skÃ© oÅ™echy, keÅ¡u oÅ™echy, pekanovÃ© oÅ™echy, para oÅ™echy, pistÃ¡cie, makadamie" },
-    { id: 9, name: "Celer" },
-    { id: 10, name: "HoÅ™Äice" },
-    { id: 11, name: "Sezam sezamovÃ¡ semena" },
-    { id: 12, name: "Oxid siÅ™iÄitÃ½ a siÅ™iÄitany E220, E221, E222, E223, E224, E226, E227, E228" },
-    { id: 13, name: "VlÄÃ­ bob lupina" },
-    { id: 14, name: "MÄ›kkÃ½Å¡i" }
-  ];
+const allergenList = [
+  { id: 1, name: "Lepek – pšenice, žitoo, ječmen, oves, špalda, kamut nebo jejich odrůdy" },
+  { id: 2, name: "Korýši" },
+  { id: 3, name: "Vejce" },
+  { id: 4, name: "Ryby" },
+  { id: 5, name: "Arašidy – podzemnice olejná" },
+  { id: 6, name: "Sója – sójové boby" },
+  { id: 7, name: "Mléko" },
+  { id: 8, name: "Skořápkové plody – mandle, lískové ořechy, vlašské ořechy, kešu ořechy, pekanové ořechy, para ořechy, pistácie, makadamie" },
+  { id: 9, name: "Celer" },
+  { id: 10, name: "Hořčice" },
+  { id: 11, name: "Sezam – sezamová semena" },
+  { id: 12, name: "Oxid siřičitý a siřičitany – E220, E221, E222, E223, E224, E226, E227, E228" },
+  { id: 13, name: "Vlčí bob – lupina" },
+  { id: 14, name: "Měkkýši" }
+];
+const monthNames = [
+  'Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen',
+  'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'
+];
 
-  const monthNames = ['Leden', 'Ãšnor', 'BÅ™ezen', 'Duben', 'KvÄ›ten', 'ÄŒerven', 
-                      'ÄŒervenec', 'Srpen', 'ZÃ¡Å™Ã­', 'Å˜Ã­jen', 'Listopad', 'Prosinec'];
-  const dayNames = ['PondÄ›lÃ­', 'ÃšterÃ½', 'StÅ™eda', 'ÄŒtvrtek', 'PÃ¡tek'];
+const dayNames = [
+  'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek'
+];
+
 
   const getMonday = (date) => {
     const d = new Date(date);
@@ -142,7 +147,7 @@ function App() {
         localStorage.setItem('isLoggedIn', 'true');
       }
     } else {
-      setLoginError('NesprÃ¡vnÃ© pÅ™ihlaÅ¡ovacÃ­ Ãºdaje');
+      setLoginError('Nesprávné přihlašovací údaje');
     }
   };
 
@@ -221,8 +226,8 @@ function App() {
     try {
       window.print();
     } catch (error) {
-      console.error('Chyba pÅ™i tisku:', error);
-      alert('NepodaÅ™ilo se otevÅ™Ã­t dialogovÃ© okno tisku.');
+      console.error('Chyba při tisku:', error);
+      alert('Nepodařilo se otevřít dialogové okno tisku.');
     }
   };
 
@@ -236,7 +241,7 @@ function App() {
       }, 100);
     } catch (error) {
       console.error('Chyba pÅ™i exportu PDF:', error);
-      alert('NepodaÅ™ilo se otevÅ™Ã­t dialogovÃ© okno tisku.');
+      alert('Nepodařilo se otevřít dialogové okno tisku.');
     }
   };
 
@@ -335,19 +340,19 @@ function App() {
     const name = mealName.toLowerCase();
     const detected = [];
 
-    if (name.match(/chlÃ©b|mouka|tÄ›sto|knedlÃ­k|pizza|Å¡pagety|nudle|pÅ¡enic|Å¾ito|jeÄmen|oves|buchty|kolÃ¡Ä/)) detected.push(1);
-    if (name.match(/krab|krevet|langusta|humr|rak/)) detected.push(2);
-    if (name.match(/vejce|vajeÄn|omeleta|smaÅ¾enice/)) detected.push(3);
-    if (name.match(/ryb|losos|kapr|pstruh|treska|tuÅˆÃ¡k|makrela|sleÄ/)) detected.push(4);
-    if (name.match(/araÅ¡Ã­d|burÃ¡k/)) detected.push(5);
-    if (name.match(/sÃ³j/)) detected.push(6);
-    if (name.match(/mlÃ©ko|smetana|sÃ½r|jogurt|tvaroh|mÃ¡slo|zmrzlin|pud[iy]nk/)) detected.push(7);
-    if (name.match(/oÅ™ech|mandle|oÅ™Ã­Å¡k/)) detected.push(8);
-    if (name.match(/celer/)) detected.push(9);
-    if (name.match(/hoÅ™Äic/)) detected.push(10);
-    if (name.match(/sezam/)) detected.push(11);
-    if (name.match(/lupin/)) detected.push(13);
-    if (name.match(/Å¡nek|slÃ¡vk|kalmÃ¡r|chobotnic|ÃºstÅ™ic/)) detected.push(14);
+if (name.match(/chléb|mouka|těsto|knedlík|pizza|špagety|nudle|pšenic|žito|ječmen|oves|buchty|koláč/)) detected.push(1);
+if (name.match(/krab|krevet|langusta|humr|rak/)) detected.push(2);
+if (name.match(/vejce|vaječn|omeleta|smaženice/)) detected.push(3);
+if (name.match(/ryb|losos|kapr|pstruh|treska|tuňák|makrela|sleď/)) detected.push(4);
+if (name.match(/arašíd|burák/)) detected.push(5);
+if (name.match(/sój/)) detected.push(6);
+if (name.match(/mléko|smetana|sýr|jogurt|tvaroh|máslo|zmrzlin|pud[iy]nk/)) detected.push(7);
+if (name.match(/ořech|mandle|oříšk/)) detected.push(8);
+if (name.match(/celer/)) detected.push(9);
+if (name.match(/hořčic/)) detected.push(10);
+if (name.match(/sezam/)) detected.push(11);
+if (name.match(/lupin/)) detected.push(13);
+if (name.match(/šnek|slávk|kalmár|chobotnic|ústřic/)) detected.push(14);
 
     return [...new Set(detected)];
   };
@@ -437,8 +442,8 @@ function App() {
       <div className="login-container">
         <div className="login-card">
           <div className="login-header">
-            <h1 className="login-title">TÃ½dennÃ­ jÃ­delnÃ­Äek</h1>
-            <p className="login-subtitle">PÅ™ihlaste se do aplikace</p>
+            <h1 className="login-title">Týdenní jídelníček</h1>
+            <p className="login-subtitle">Přihlaste se do aplikace</p>
           </div>
 
           <form onSubmit={handleLogin} className="login-form">
@@ -449,7 +454,7 @@ function App() {
             )}
 
             <div className="form-group">
-              <label className="form-label">UÅ¾ivatelskÃ© jmÃ©no</label>
+              <label className="form-label">Uživatelské jméno</label>
               <input
                 type="text"
                 value={loginForm.username}
@@ -467,7 +472,7 @@ function App() {
                 value={loginForm.password}
                 onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
                 className="form-input"
-                placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                placeholder="••••••••"
                 required
               />
             </div>
@@ -480,17 +485,17 @@ function App() {
                   onChange={(e) => setRememberMe(e.target.checked)}
                   className="remember-me-checkbox"
                 />
-                <span>Zapamatovat si pÅ™ihlÃ¡Å¡enÃ­</span>
+                <span>Zapamatovat si přihlášení­</span>
               </label>
             </div>
 
             <button type="submit" className="btn btn-blue login-btn">
-              PÅ™ihlÃ¡sit se
+              Přihlásit se
             </button>
 
             <div className="login-demo-info">
-              <p className="demo-text">Demo ÃºÄet:</p>
-              <p className="demo-credentials">UÅ¾ivatel: <strong>demo</strong></p>
+              <p className="demo-text">Demo účet:</p>
+              <p className="demo-credentials">Uživatel: <strong>demo</strong></p>
               <p className="demo-credentials">Heslo: <strong>demo123</strong></p>
             </div>
           </form>
@@ -548,17 +553,17 @@ function App() {
       <div className="content-wrapper">
         <div className="no-print header-section">
           <div className="header-top">
-            <h1>TÃ½dennÃ­ jÃ­delnÃ­Äek</h1>
+            <h1>Týdenní jídělníček</h1>
             <div className="button-group">
               <button onClick={handleLogout} className="btn btn-outline">
-                OdhlÃ¡sit se
+                Odhlásit se
               </button>
               <button onClick={openContactModal} className="btn btn-outline">
                 Kontakt
               </button>
               <button onClick={openAttachmentsModal} className="btn btn-outline">
                 <Download size={20} />
-                PÅ™Ã­lohy
+                Přílohy
               </button>
               <button onClick={handleExportPDF} className="btn btn-blue">
                 <Download size={20} />
@@ -578,7 +583,7 @@ function App() {
             <button 
               onClick={() => setShowCalendar(!showCalendar)} 
               className="week-range week-range-clickable"
-              title="KliknÄ›te pro otevÅ™enÃ­ kalendÃ¡Å™e"
+              title="Klikněte pro otevření kalendáře"
             >
               <Calendar size={18} className="calendar-icon" />
               {formatDate(weekDates[0])} - {formatDate(weekDates[4])}
@@ -603,7 +608,7 @@ function App() {
               </div>
               
               <div className="calendar-grid">
-                {['Po', 'Ãšt', 'St', 'ÄŒt', 'PÃ¡', 'So', 'Ne'].map(day => (
+                {['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'].map(day => (
                   <div key={day} className="calendar-day-header">{day}</div>
                 ))}
                 
@@ -624,7 +629,7 @@ function App() {
         </div>
 
         <div className="menu-card">
-          <h2 className="menu-title">JÃDELNÃÄŒEK</h2>
+          <h2 className="menu-title">Týdenní jídelníček</h2>
           <p className="menu-subtitle">
             {formatDate(weekDates[0])} - {formatDate(weekDates[4])}
           </p>
@@ -636,11 +641,11 @@ function App() {
               </h3>
               
               <div className="meal-list print-meal-list">
-                {renderMealRow(idx, 'soup', 'PolÃ©vka:', 'Zadejte polÃ©vku')}
-                {renderMealRow(idx, 'mealA', 'A)', 'HlavnÃ­ chod A')}
-                {renderMealRow(idx, 'mealB', 'B)', 'HlavnÃ­ chod B')}
-                {renderMealRow(idx, 'mealC', 'C)', 'HlavnÃ­ chod C')}
-                {renderMealRow(idx, 'mealD', 'D) DietnÃ­:', 'DietnÃ­ jÃ­dlo')}
+                {renderMealRow(idx, 'soup', 'Polévka:', 'Zadejte polévku')}
+                {renderMealRow(idx, 'mealA', 'A)', 'Hlavní chod A')}
+                {renderMealRow(idx, 'mealB', 'B)', 'Hlavní chod B')}
+                {renderMealRow(idx, 'mealC', 'C)', 'Hlavní­ chod C')}
+                {renderMealRow(idx, 'mealD', 'D) Dietní­:', 'Dietí­ jídlo')}
               </div>
             </div>
           ))}
@@ -648,12 +653,12 @@ function App() {
 
         {currentAttachments.length > 0 && (
           <div className="attachments-section print-attachments">
-            <h3 className="attachments-title">PÅ™Ã­lohy</h3>
+            <h3 className="attachments-title">Přílohy</h3>
             <div className="attachments-list">
               {currentAttachments.map((att, idx) => (
                 <div key={idx} className="attachment-item">
                   <span className="attachment-name">{att.name}</span>
-                  {att.price && <span className="attachment-price">{att.price} KÄ</span>}
+                  {att.price && <span className="attachment-price">{att.price} Kč</span>}
                 </div>
               ))}
             </div>
@@ -684,7 +689,7 @@ function App() {
       {showAttachmentsModal && (
         <div className="modal-overlay" onClick={closeAttachmentsModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h2 className="modal-title">SprÃ¡va pÅ™Ã­loh</h2>
+            <h2 className="modal-title">Správa příloh</h2>
             
             <div className="attachments-form">
               {tempAttachments.map((att, idx) => (
@@ -693,7 +698,7 @@ function App() {
                     type="text"
                     value={att.name}
                     onChange={(e) => updateAttachment(idx, 'name', e.target.value)}
-                    placeholder="NÃ¡zev pÅ™Ã­lohy"
+                    placeholder="Název přílohy"
                     className="attachment-input attachment-name-input"
                   />
                   <input
@@ -709,23 +714,23 @@ function App() {
                       className="btn-remove"
                       title="Odebrat"
                     >
-                      âœ•
+                      -
                     </button>
                   )}
                 </div>
               ))}
               
               <button onClick={addAttachment} className="btn-add">
-                + PÅ™idat dalÅ¡Ã­ pÅ™Ã­lohu
+                + Přidat další přílohu
               </button>
             </div>
 
             <div className="modal-actions">
               <button onClick={closeAttachmentsModal} className="btn btn-secondary">
-                ZruÅ¡it
+                Zrušit
               </button>
               <button onClick={saveAttachments} className="btn btn-blue">
-                UloÅ¾it
+                Uložit
               </button>
             </div>
           </div>
@@ -776,8 +781,8 @@ function App() {
       {showAllergenModal && currentAllergenEdit && (
         <div className="modal-overlay" onClick={closeAllergenModal}>
           <div className="modal-content allergen-modal-content" onClick={(e) => e.stopPropagation()}>
-            <h2 className="modal-title">Alergeny pro: {currentAllergenEdit.mealName || 'NevyplnÄ›no'}</h2>
-            <p className="allergen-hint">Automaticky detekovanÃ© alergeny jsou pÅ™edvybranÃ©. Upravte dle potÅ™eby.</p>
+            <h2 className="modal-title">Alergeny pro: {currentAllergenEdit.mealName || 'Nevyplněno'}</h2>
+            <p className="allergen-hint">Automaticky detekované alergeny jsou předvybrané. Upravte dle potřeby.</p>
             
             <div className="allergen-list">
               {allergenList.map((allergen) => (
@@ -796,10 +801,10 @@ function App() {
 
             <div className="modal-actions">
               <button onClick={closeAllergenModal} className="btn btn-secondary">
-                ZruÅ¡it
+                Zrušiit
               </button>
               <button onClick={saveAllergens} className="btn btn-blue">
-                UloÅ¾it
+                Uložit
               </button>
             </div>
           </div>
