@@ -62,7 +62,7 @@ function App() {
   }, [contactInfo]);
 
 const allergenList = [
-  { id: 1, name: "Lepek – pšenice, žito, ječmen, oves, špalda, kamut nebo jejich odrůdy" },
+  { id: 1, name: "Lepek – pšenice, žitoo, ječmen, oves, špalda, kamut nebo jejich odrůdy" },
   { id: 2, name: "Korýši" },
   { id: 3, name: "Vejce" },
   { id: 4, name: "Ryby" },
