@@ -1,0 +1,167 @@
+/* --- PRINT GRID LAYOUT (2 COLUMNS) --- */
+
+@media print {
+  .pdf-grid-layout .menu-card {
+    display: contents;
+  }
+
+  .pdf-grid-layout .menu-title,
+  .pdf-grid-layout .menu-subtitle {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
+  .pdf-grid-layout .menu-title {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .pdf-grid-layout .content-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 0.5cm;
+  }
+
+  .pdf-grid-layout .day-section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 0;
+  }
+
+  .pdf-grid-layout .day-border {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .pdf-grid-layout .day-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+  }
+
+  .pdf-grid-layout .meal-list {
+    gap: 0.15rem;
+  }
+
+  .pdf-grid-layout .meal-row {
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr) 3rem 1.5rem;
+    gap: 0.3rem;
+    align-items: start;
+    margin-bottom: 0.1rem;
+  }
+
+  .pdf-grid-layout .meal-label {
+    font-size: 0.75rem;
+    font-weight: bold;
+    grid-column: 1;
+  }
+
+  .pdf-grid-layout .input-wrapper {
+    grid-column: 2;
+    min-width: 0;
+    overflow: visible;
+  }
+
+  .pdf-grid-layout .weight-input-wrapper {
+    grid-column: 3;
+    text-align: right;
+  }
+
+  .pdf-grid-layout .weight-input-wrapper::after {
+    font-size: 0.7rem;
+  }
+
+  .pdf-grid-layout .allergen-display {
+    grid-column: 4;
+    font-size: 0.7rem;
+    text-align: center;
+  }
+
+  .pdf-grid-layout .meal-text-print {
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .pdf-grid-layout .attachments-section {
+    grid-column: 1 / -1;
+    margin-top: 0.5rem;
+    padding: 0.3rem 0;
+  }
+
+  .pdf-grid-layout .attachments-title {
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .pdf-grid-layout .attachments-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.15rem 0.5rem;
+  }
+
+  .pdf-grid-layout .attachment-item {
+    font-size: 0.7rem;
+  }
+
+  .pdf-grid-layout .attachment-name {
+    font-size: 0.7rem;
+  }
+
+  .pdf-grid-layout .attachment-price {
+    font-size: 0.7rem;
+  }
+
+  .pdf-grid-layout .contact-section {
+    grid-column: 1 / -1;
+    padding: 0.5rem 0;
+  }
+
+  .pdf-grid-layout .contact-info {
+    flex-direction: row;
+    gap: 1.5rem;
+    justify-content: center;
+  }
+
+  .pdf-grid-layout .contact-item {
+    font-size: 0.7rem;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 0.75cm;
+  }
+
+.allergen-legend {
+  display: block !important;
+}
+
+.print-allergen-legend {
+  display: block !important;
+  margin-top: 0.5rem;
+  padding: 10px;
+  page-break-inside: avoid;
+  font-size: 0.75rem;
+  line-height: 0.4;
+  border-top: 1px solid #e5e7eb;
+  background-color: transparent;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  border-radius: 0;
+}
+
+
+.allergen-legend-content {
+  text-align: left;
+  font-size: 0.75rem !important;
+}
+
+.allergen-legend-content strong {
+  font-weight: bold;
+  margin-right: 0.5rem;
+  font-size: 0.75rem !important;
+}
+
+}

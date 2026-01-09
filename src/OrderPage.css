@@ -1,0 +1,143 @@
+.order-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.order-container h1 {
+  text-align: center;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.order-subtitle {
+  text-align: center;
+  color: #6b7280;
+  margin-bottom: 2rem;
+}
+
+.customer-input {
+  margin-bottom: 2rem;
+}
+
+.customer-input label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #374151;
+}
+
+.customer-input input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.order-days {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.order-day {
+  border: 1px solid #e5e7eb;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.order-day h3 {
+  margin-bottom: 1rem;
+  color: #1f2937;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.order-item:last-child {
+  border-bottom: none;
+}
+
+.order-item span {
+  flex: 1;
+  color: #374151;
+}
+
+.order-item input {
+  width: 80px;
+  padding: 0.5rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.order-submit-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 2rem;
+  transition: transform 0.2s;
+}
+
+.order-submit-btn:hover {
+  transform: translateY(-2px);
+}
+
+.order-loading,
+.order-error {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.25rem;
+  color: #6b7280;
+}
+
+.order-error {
+  color: #dc2626;
+}
+
+.order-success {
+  max-width: 600px;
+  margin: 4rem auto;
+  padding: 3rem;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.order-success h2 {
+  color: #10b981;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.order-success p {
+  color: #6b7280;
+  font-size: 1.125rem;
+}
+
+@media (max-width: 768px) {
+  .order-container {
+    margin: 1rem;
+    padding: 1rem;
+  }
+}

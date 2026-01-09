@@ -1,0 +1,283 @@
+/* --- PRINT STYLES --- */
+
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+    background: white;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .app-container {
+    padding: 0;
+    background: white;
+    position: relative;
+    min-height: 100vh;
+  }
+
+  .content-wrapper {
+    padding-bottom: 1.5cm;
+    max-width: 100%;
+  }
+
+  .menu-card {
+    box-shadow: none;
+    padding: 0.5rem;
+  }
+
+  .menu-title {
+    font-size: 1.125rem;
+    margin-bottom: 0;
+    display: inline;
+    margin-right: 1rem;
+  }
+
+  .menu-subtitle {
+    display: inline;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+
+  .day-section:first-of-type {
+    margin-top: 1rem;
+  }
+
+  .day-section {
+    margin-bottom: 0.5rem;
+  }
+
+  .day-border {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .day-title {
+    font-size: 1.025rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .meal-list {
+    gap: 0.1rem;
+  }
+
+  .meal-row.empty-meal,
+  .print-meal-row.empty-meal {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  :root {
+    --print-col-label: 5rem;
+    --print-col-weight: 5rem;
+    --print-col-allergen: 40px;
+    --print-gap: 0.3rem;
+  }
+
+  .meal-row {
+    display: grid !important;
+    grid-template-columns: var(--print-col-label) minmax(0, 1fr) var(--print-col-weight) var(--print-col-allergen);
+    gap: var(--print-gap);
+    align-items: start;
+    margin-bottom: 0.15rem;
+    page-break-inside: avoid;
+    width: 100%;
+    line-height: 1.2;
+  }
+
+  .meal-label {
+    grid-column: 1;
+    font-weight: bold;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    line-height: 1.2;
+    padding: 0;
+    margin: 0;
+  }
+
+  .input-wrapper {
+    grid-column: 2;
+    min-width: 0;
+    position: static;
+    line-height: 1.3;
+    overflow: visible;
+    word-wrap: break-word;
+  }
+
+  .meal-input {
+    display: none !important;
+  }
+
+  .meal-text-print {
+    display: block !important;
+    font-size: 0.85rem;
+    line-height: 1.3;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .weight-input-wrapper {
+    grid-column: 3;
+    text-align: right;
+    white-space: nowrap;
+    line-height: 1.2;
+  }
+  
+  .weight-input-wrapper::after {
+    content: attr(data-weight) attr(data-unit);
+    font-weight: bold;
+    font-size: 0.85rem;
+    display: block;
+  }
+
+  .weight-input-wrapper .weight-input,
+  .weight-input-wrapper .weight-unit {
+    display: none !important;
+  }
+
+  .allergen-display {
+    display: block !important;
+    grid-column: 4;
+    text-align: center;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    line-height: 1.2;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .print-attachments {
+    margin-top: 0.5rem;
+    page-break-inside: avoid;
+  }
+
+  .attachments-section {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+  }
+
+  .attachments-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .attachments-list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+flex-direction: row;
+  justify-content: space-between;
+}
+
+  .attachment-item {
+    padding: 0.1rem 0;
+    font-size: 0.75rem;
+    text-align: left;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .attachment-name {
+    font-size: 0.75rem;
+  }
+
+  .attachment-price {
+    font-size: 0.75rem;
+  }
+
+  .print-contact {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    page-break-inside: avoid;
+    margin-top: 1rem;
+  }
+
+  .contact-section {
+    background-color: transparent;
+    border: none;
+    padding: 0.75rem 0;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .contact-title {
+    display: none;
+  }
+
+  .contact-info {
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  .contact-item {
+    font-size: 0.75rem;
+    flex-direction: row;
+    gap: 0.25rem;
+  }
+
+  .contact-label {
+    font-size: 0.75rem;
+    min-width: auto;
+  }
+
+  .contact-value {
+    font-size: 0.75rem;
+  }
+
+  .allergen-btn {
+    display: none !important;
+  }
+
+  .print-only {
+    display: inline !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 1cm;
+  }
+
+.allergen-legend {
+  display: block !important;
+}
+
+.print-allergen-legend {
+  display: block !important;
+  margin-top: 0.5rem;
+  padding: 10px;
+  page-break-inside: avoid;
+  font-size: 0.75rem;
+  line-height: 0.4;
+  border-top: 1px solid #e5e7eb;
+  background-color: transparent;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  border-radius: 0;
+}
+
+
+.allergen-legend-content {
+  text-align: left;
+  font-size: 0.75rem !important;
+}
+
+.allergen-legend-content strong {
+  font-weight: bold;
+  margin-right: 0.5rem;
+  font-size: 0.7rem !important;
+}
+}
