@@ -1,0 +1,15 @@
+name: Test CI
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+
+    steps:
+      - name: Say hello
+        run: |
+          echo "Ahoj, GitHub Actions funguje"
