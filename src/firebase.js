@@ -3,7 +3,7 @@ import { getFirestore } from 'firebase/firestore';
 
 // TODO: Nahraď těmito hodnotami z Firebase Console
 const firebaseConfig = {
-  apiKey: "AIzaSyAtP06ME1i5fp4gP24HOup6u2gC6J_vY9U",
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "jidelnicek-e5b5c.firebaseapp.com",
   projectId: "jidelnicek-e5b5c",
   storageBucket: "jidelnicek-e5b5c.firebasestorage.app",
