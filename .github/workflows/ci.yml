@@ -10,6 +10,18 @@ jobs:
       GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
 
     steps:
-      - name: Say hello
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Test API key
         run: |
-          echo "Ahoj, GitHub Actions funguje"
+          if [ -z "$GOOGLE_API_KEY" ]; then
+            echo "❌ API key NENÍ"
+            exit 1
+          else
+            echo "✅ API key JE"
+          fi
+
+      - name: Run your app
+        run: |
+          node app.js  # nebo jiný příkaz, který používá API key
