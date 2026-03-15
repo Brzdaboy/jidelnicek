@@ -108,27 +108,13 @@ function LandingPage({ onStartApp }) {
 
       <section className="demo-section" id="demo-section">
   <div className="demo-content">
-    <h2 className="section-title">Vyzkoušejte demo verzi</h2>
+    <h2 className="section-title">Začněte hned</h2>
     <p className="demo-description">
-      Přihlaste se pomocí demo účtu a objevte všechny funkce aplikace zcela zdarma.
+      Přihlaste se svými přihlašovacími údaji a začněte plánovat jídelníčky.
     </p>
-    
-    <div className="demo-cards">
-      <div className="demo-card">
-        <div className="demo-card-icon">👤</div>
-        <div className="demo-card-label">Uživatelské jméno</div>
-        <div className="demo-card-value">demo</div>
-      </div>
-      
-      <div className="demo-card">
-        <div className="demo-card-icon">🔒</div>
-        <div className="demo-card-label">Heslo</div>
-        <div className="demo-card-value">demo123</div>
-      </div>
-    </div>
 
     <button className="demo-button" onClick={onStartApp}>
-      <span>Spustit aplikaci</span>
+      <span>Přihlásit se</span>
       <span className="button-arrow">→</span>
     </button>
 
@@ -143,7 +129,7 @@ function LandingPage({ onStartApp }) {
       </div>
       <div className="demo-feature-item">
         <span className="demo-feature-icon">✓</span>
-        Bez registrace
+        Bezpečné přihlášení
       </div>
     </div>
   </div>

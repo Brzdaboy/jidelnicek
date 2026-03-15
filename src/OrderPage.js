@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { db } from './firebase';
 import { doc, getDoc, collection, addDoc } from 'firebase/firestore';
 import './OrderPage.css';
@@ -11,7 +12,8 @@ function OrderPage() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
 
-  const menuId = new URLSearchParams(window.location.search).get('id');
+  const [searchParams] = useSearchParams();
+  const menuId = searchParams.get('id');
 
   const loadMenu = useCallback(async () => {
     try {

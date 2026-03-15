@@ -1,7 +1,8 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Printer, ChevronLeft, ChevronRight, Calendar, Settings, ChevronDown, Share2, ShoppingCart } from 'lucide-react';
-import { db } from './firebase';
-import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
+import { db, auth } from './firebase';
+import { collection, addDoc, query, where, getDocs, updateDoc } from 'firebase/firestore';
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import OrdersDashboard from './OrdersDashboard';
 import LandingPage from './LandingPage';
 import './App.css';
@@ -10,15 +11,13 @@ import './PrintGrid.css';
 
 function App() {
   const [showLanding, setShowLanding] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem('isLoggedIn') === 'true';
-  });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
   const [showAccountMenu, setShowAccountMenu] = useState(false);
   const accountMenuRef = useRef(null);
   const calendarRef = useRef(null);
-  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+  const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   const [loginError, setLoginError] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
   const [weekOffset, setWeekOffset] = useState(0);
   const [menus, setMenus] = useState(() => {
     const saved = localStorage.getItem('menus');
@@ -72,15 +71,22 @@ function App() {
   const [unreadOrdersCount, setUnreadOrdersCount] = useState(0);
   const [hasNewOrders, setHasNewOrders] = useState(false);
 
-  // eslint-disable-next-line no-unused-vars
-  const [columnWidths, setColumnWidths] = useState(() => {
-    const saved = localStorage.getItem('columnWidths');
-    return saved ? JSON.parse(saved) : { label: 80, weight: 80, meal: 0, allergen: 30 };
-  });
-
   // Nový state pro modální okno nastavení
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [settingsTab, setSettingsTab] = useState('attachments'); // 'attachments', 'contact', 'layout'
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLoggedIn(true);
+        setShowLanding(false);
+      } else {
+        setIsLoggedIn(false);
+      }
+      setAuthLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('showAllergenList', showAllergenList);
@@ -235,8 +241,8 @@ function App() {
       });
       return newMenu;
     }
-    // Zajistíme, že data mají správnou strukturu, i když byla načtena ze starého formátu
-    const existingMenu = menus[weekKey];
+    // Zajistíme, že data mají správnou strukturu — pracujeme s hlubokou kopií
+    const existingMenu = JSON.parse(JSON.stringify(menus[weekKey]));
     weekDates.forEach((_, idx) => {
         if (!existingMenu[idx]) {
              existingMenu[idx] = {
@@ -274,25 +280,20 @@ function App() {
   return [];
 }, [attachments, weekKey]);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    
-    if (loginForm.username === 'demo' && loginForm.password === 'demo123') {
-      setIsLoggedIn(true);
-      setLoginError('');
-      
-      if (rememberMe) {
-        localStorage.setItem('isLoggedIn', 'true');
-      }
-    } else {
+    setLoginError('');
+    try {
+      await signInWithEmailAndPassword(auth, loginForm.email, loginForm.password);
+    } catch (err) {
       setLoginError('Nesprávné přihlašovací údaje');
     }
   };
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setLoginForm({ username: '', password: '' });
-    localStorage.removeItem('isLoggedIn');
+  const handleLogout = async () => {
+    await signOut(auth);
+    setLoginForm({ email: '', password: '' });
+    setShowLanding(true);
   };
 
   const handleInputChange = (dayIdx, field, value) => {
@@ -381,19 +382,6 @@ function App() {
     }
   };
 
-  const handleExportPDF = () => {
-    try {
-      const originalTitle = document.title;
-      document.title = `Jidelnicek-${weekKey}`;
-      window.print();
-      setTimeout(() => {
-        document.title = originalTitle;
-      }, 100);
-    } catch (error) {
-      console.error('Chyba při exportu PDF:', error);
-      alert('Nepodařilo se otevřít dialogové okno tisku.');
-    }
-  };
 
   const selectDateFromCalendar = (date) => {
     const today = new Date();
@@ -656,8 +644,26 @@ const hasMenuForDate = (date) => {
         timestamp: new Date()
       };
 
-      const docRef = await addDoc(collection(db, 'menus'), menuData);
-      const link = `${window.location.origin}/order?id=${docRef.id}`;
+      // Zkontroluj jestli menu pro tento týden již v Firestore existuje
+      const existingQuery = query(
+        collection(db, 'menus'),
+        where('weekKey', '==', weekKey)
+      );
+      const existingSnapshot = await getDocs(existingQuery);
+
+      let menuId;
+      if (!existingSnapshot.empty) {
+        // Reuse existujícího dokumentu a aktualizuj data
+        const existingDoc = existingSnapshot.docs[0];
+        menuId = existingDoc.id;
+        await updateDoc(existingDoc.ref, menuData);
+      } else {
+        const docRef = await addDoc(collection(db, 'menus'), menuData);
+        menuId = docRef.id;
+      }
+
+      const base = `${window.location.origin}${window.location.pathname}`;
+      const link = `${base}#/order?id=${menuId}`;
       setShareLink(link);
       setShowShareModal(true);
     } catch (err) {
@@ -669,6 +675,10 @@ const hasMenuForDate = (date) => {
     navigator.clipboard.writeText(shareLink);
     alert('Odkaz zkopírován do schránky!');
   };
+
+  if (authLoading) {
+    return <div className="login-container"><div className="login-card"><p style={{ textAlign: 'center', color: '#6b7280' }}>Načítám...</p></div></div>;
+  }
 
   if (showLanding && !isLoggedIn) {
     return <LandingPage onStartApp={() => setShowLanding(false)} />;
@@ -691,13 +701,13 @@ const hasMenuForDate = (date) => {
             )}
 
             <div className="form-group">
-              <label className="form-label">Uživatelské jméno</label>
+              <label className="form-label">Email</label>
               <input
-                type="text"
-                value={loginForm.username}
-                onChange={(e) => setLoginForm({ ...loginForm, username: e.target.value })}
+                type="email"
+                value={loginForm.email}
+                onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
                 className="form-input"
-                placeholder="demo"
+                placeholder="vas@email.cz"
                 required
               />
             </div>
@@ -714,27 +724,9 @@ const hasMenuForDate = (date) => {
               />
             </div>
 
-            <div className="remember-me-group">
-              <label className="remember-me-label">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="remember-me-checkbox"
-                />
-                <span>Zapamatovat si přihlášení</span>
-              </label>
-            </div>
-
             <button type="submit" className="btn btn-blue login-btn">
               Přihlásit se
             </button>
-
-            <div className="login-demo-info">
-              <p className="demo-text">Demo účet:</p>
-              <p className="demo-credentials">Uživatel: <strong>demo</strong></p>
-              <p className="demo-credentials">Heslo: <strong>demo123</strong></p>
-            </div>
           </form>
         </div>
       </div>
